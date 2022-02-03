@@ -8,14 +8,14 @@ import { client } from '../sanity';
 import MasonryLayout from '../layout/MasonryLayout';
 import Spinner from '../components/loading/Spinner';
 
-const activeBtnStyles = 'bg-red-500 text-white font-bold p-2 rounded-full w-20 outline-none';
-const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-2 rounded-full w-20 outline-none';
+const activeBtnStyles = 'bg-green-500 text-white font-bold p-3 rounded-full w-30 outline-none';
+const notActiveBtnStyles = 'bg-primary mr-4 text-black font-bold p-3 rounded-full w-20 outline-none';
 
 const UserProfile = () => {
   const [user, setUser] = useState();
   const [posts, setposts] = useState();
-  const [text, setText] = useState('Created');
-  const [activeBtn, setActiveBtn] = useState('created');
+  const [text, setText] = useState('Posted');
+  const [activeBtn, setActiveBtn] = useState('posted');
   const navigate = useNavigate();
   const { userId } = useParams();
 
@@ -29,7 +29,7 @@ const UserProfile = () => {
   }, [userId]);
 
   useEffect(() => {
-    if (text === 'Created') {
+    if (text === 'Posted') {
       const createdpostsQuery = userCreatedpostsQuery(userId);
 
       client.fetch(createdpostsQuery).then((data) => {
@@ -96,21 +96,31 @@ const UserProfile = () => {
             type="button"
             onClick={(e) => {
               setText(e.target.textContent);
-              setActiveBtn('Posted');
+              setActiveBtn('posted');
             }}
-            className={`${activeBtn === 'created' ? activeBtnStyles : notActiveBtnStyles}`}
+            className={`${activeBtn === 'posted' ? activeBtnStyles : notActiveBtnStyles}`}
           >
-            Created
+            Posted
           </button>
           <button
             type="button"
             onClick={(e) => {
               setText(e.target.textContent);
-              setActiveBtn('Liked');
+              setActiveBtn('liked');
             }}
-            className={`${activeBtn === 'saved' ? activeBtnStyles : notActiveBtnStyles}`}
+            className={`${activeBtn === 'liked' ? activeBtnStyles : notActiveBtnStyles}`}
           >
-            Saved
+            Liked
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              setText(e.target.textContent);
+              setActiveBtn('followed');
+            }}
+            className={`${activeBtn === 'followed' ? activeBtnStyles : notActiveBtnStyles}`}
+          >
+            Following
           </button>
         </div>
 
@@ -119,9 +129,12 @@ const UserProfile = () => {
         </div>
 
         {posts?.length === 0 && (
-        <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
+          activeBtn === 'followed' ? <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
+          No users Found!
+        </div> : <div className="flex justify-center font-bold items-center w-full text-1xl mt-2">
           No posts Found!
         </div>
+        
         )}
       </div>
 
