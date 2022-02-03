@@ -35,6 +35,10 @@ const Feed = () => {
       <Spinner message={`load ${ideaName} post to your feed 🙉`} />
     );
   }
+
+  if(!posts?.length){
+    return <h2>Nothing there</h2>
+  }
   return (
     <div>
       {posts && (

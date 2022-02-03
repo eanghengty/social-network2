@@ -12,7 +12,7 @@ import { faBars, faHamburger, faTimes } from "@fortawesome/free-solid-svg-icons"
 import {Link} from 'react-router-dom'
 import './Home.css'
 import {Routes, Route} from 'react-router-dom'
-import UserProfile from "../../profile/userProfile"
+import UserProfile from "../../profile/UserProfile"
 
 const Home =()=>{
     const [toggleSidebar, setToggleSidebar] = useState(false);
@@ -36,7 +36,7 @@ const Home =()=>{
   return (
     <div className="flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out">
       <div className="hidden md:flex h-screen flex-initial">
-        <Sidebar user={user && user} />
+        <Sidebar users={user && user} />
       </div>
       <div className="flex md:hidden flex-row bg-gray-200">
         <div className="p-2 w-full flex flex-row justify-between items-center shadow-md">
@@ -53,7 +53,7 @@ const Home =()=>{
           <div className="absolute w-full flex justify-end items-center p-2">
             <FontAwesomeIcon icon={faTimes} fontSize={30} className="cursor-pointer text-red-300" onClick={() => setToggleSidebar(false)} />
           </div>
-          <Sidebar closeToggle={setToggleSidebar} user={user && user} />
+          <Sidebar closeToggle={setToggleSidebar} users={user && user} />
         </div>
         )}
       </div>

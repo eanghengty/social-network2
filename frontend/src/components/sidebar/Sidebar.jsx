@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {NavLink,Link } from 'react-router-dom';
 import {categories} from '../../utils/data'
 
-
 const isNotActiveStyle = 'flex items-center px-5 gap-3 text-gray-500 hover:text-green-300  transition-all duration-200 ease-in-out capitalize';
 const isActiveStyle = 'flex items-center px-5 gap-3 font-extrabold text-blue-300 border-r-2 border-indigo-300 transition-all duration-200 ease-in-out capitalize';
 
-const Sidebar = ({ closeToggle, user }) => {
+const Sidebar = ({ closeToggle, users }) => {
+
   const handleCloseSidebar = () => {
     if (closeToggle) closeToggle(false);
   };
@@ -72,17 +72,7 @@ const Sidebar = ({ closeToggle, user }) => {
 
         </div>
       </div>
-      {user && (
-        <Link
-          to={`user-profile/${user._id}`}
-          className="flex my-5 mb-3 gap-2 p-2 items-center bg-green-200 rounded-lg shadow-lg mx-3"
-          onClick={handleCloseSidebar}
-        >
-          <img src={user.image} className="w-10 h-10 rounded-full" alt="user-profile" />
-          <p>{user.userName}</p>
-          
-        </Link>
-      )}
+      
     </div>
   );
 };

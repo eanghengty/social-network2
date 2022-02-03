@@ -108,7 +108,7 @@ const Post = ({post}) => {
                     savePost(_id);
                   }}
                   type="button"
-                  className="bg-white opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
+                  className="bg-green-300 opacity-70 hover:opacity-100 text-white font-bold px-5 py-1 text-base rounded-3xl hover:shadow-md outline-none"
                 >
                   {post?.save?.length}   {savingPost ? 'Loading' : '🤍'}
                 </button>
