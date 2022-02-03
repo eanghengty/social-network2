@@ -11,10 +11,10 @@ const Login=()=>{
     const route= useNavigate()
 
     const responseGoogle=(response)=>{
-
+      localStorage.setItem('user', JSON.stringify(response.profileObj))
         const {name,googleId,imageUrl} = response.profileObj
 
-        localStorage.setItem('user', JSON.stringify(response.profileObj))
+        
 
         //sanity doc new user
         const doc={
