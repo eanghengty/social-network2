@@ -50,8 +50,8 @@ export default{
             }]
         },
         {
-            name:'comment',
-            title:'Comment',
+            name:'comments',
+            title:'Comments',
             type:'array',
             of:[{
                 type:'comment'
