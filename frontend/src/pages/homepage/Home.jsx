@@ -15,15 +15,19 @@ import {Routes, Route} from 'react-router-dom'
 import UserProfile from "../../profile/UserProfile"
 
 const Home =()=>{
+
+  //change value hamburger
     const [toggleSidebar, setToggleSidebar] = useState(false);
   const [user, setUser] = useState();
   const scrollRef = useRef(null);
 //get data from localstorage
   const userInfo = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
 
+  //it query only one when page render
   useEffect(() => {
-    const query = userQuery(userInfo?.googleId);
 
+    const query = userQuery(userInfo?.googleId);
+    //if it true then it set user to the first user
     client.fetch(query).then((data) => {
       setUser(data[0]);
     });
