@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Preahvihear&display=swap');
+.font{
+    font-family: 'Preahvihear', sans-serif;
+}
+@keyframes first-blinking{
+    0%{
+        color:#45b6bf;
+    }
+    100%{
+        color:#00d03a;
+    }
+    
+}
+.color-1{
+    animation: first-blinking 2s infinite;
+}
+@keyframes second-blinking{
+    0%{
+        color:#00d03a;
+        
+    }
+    100%{
+        color:#45b6bf;
+    }
+    
+
+}
+.color-2{
+    animation: second-blinking 1s infinite;
+}
