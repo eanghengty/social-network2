@@ -7,11 +7,13 @@ import Navbar from '../Navbar/Navbar'
 import {useState} from 'react'
 
 const Posts=({user})=>{
+  //default value = empty string
     const [searchTerm, setSearchTerm] = useState('');
 
     return (
       <div className="px-2 md:px-5">
         <div className="bg-gray-50">
+          {/* pass search term to navbar */}
           <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} user={user && user} />
         </div>
         <div className="h-full">

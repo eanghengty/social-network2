@@ -7,7 +7,7 @@ import { client, urlFor } from '../../sanity';
 import MasonryLayout from '../../layout/MasonryLayout';
 import { postDetailMorepostQuery, postDetailQuery } from '../../utils/data';
 import Spinner from '../loading/Spinner';
-
+//accept data from home
 const PostDetail = ({ user }) => {
   const { postId} = useParams();
   const [posts, setPosts] = useState();
@@ -15,15 +15,19 @@ const PostDetail = ({ user }) => {
   const [comment, setComment] = useState('');
   const [addingComment, setAddingComment] = useState(false);
 
+  //get post detail
   const fetchPostDetails = () => {
     const query = postDetailQuery(postId);
-
+    //postid true
     if (query) {
+      //fetch data
       client.fetch(`${query}`).then((data) => {
+        //data object
         setPostDetail(data[0]);
-        console.log(data);
+        // console.log(data);
         if (data[0]) {
           const query1 = postDetailMorepostQuery(data[0]);
+          //fetch which post has the same category
           client.fetch(query1).then((res) => {
             setPosts(res);
           });
@@ -32,19 +36,23 @@ const PostDetail = ({ user }) => {
     }
   };
 
+  //render only when postid change
   useEffect(() => {
     fetchPostDetails();
   }, [postId]);
 
+  //add comment
   const addComment = () => {
+    //df empty string 
     if (comment) {
       setAddingComment(true);
-
+      //if comment then fetch 
       client
         .patch(postId)
         .setIfMissing({ comments: [] })
         .insert('after', 'comments[-1]', [{ comment, _key: uuidv4(), postedBy: { _type: 'postedBy', _ref: user._id } }])
         .commit()
+        //pass to ref user then set back to empty string
         .then(() => {
           fetchPostDetails();
           setComment('');

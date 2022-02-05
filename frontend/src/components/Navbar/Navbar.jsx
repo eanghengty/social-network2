@@ -1,13 +1,38 @@
+import { faHome, faPizzaSlice, faSchool } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import {NavLink } from 'react-router-dom';
+import {categories} from '../../utils/data'
+
+//style when each category select
+
+
+
+
+////
+
 import "./Navbar.css"
-import { faBell, faChartBar, faComments, faHome, faPersonBooth, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
+import { faBell, faChartBar, faComments, faPersonBooth, faSearch, faUser } from "@fortawesome/free-solid-svg-icons"
 
-import logo from '../../assets/blacklogo.png'
+import {useTranslation} from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import '../../i18n'
+
+
+
+  
+  
 const Navbar = ({ searchTerm, setSearchTerm, user }) => {
   const navigate = useNavigate();
-
+  const {t,i18n} = useTranslation()
+  const handleClick=(lang)=>{
+   
+      
+    i18n.changeLanguage(lang)
+  
+  
+  
+}
   if (user) {
     return (
         
@@ -19,7 +44,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
           <input
             type="text"
             onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="Search place or food . . ."
+            placeholder={t('Search place or food.1')}
             value={searchTerm}
             onFocus={() => navigate('/search')}
             className="p-2 w-full bg-white outline-green-300"
@@ -30,15 +55,16 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
             <Link to="/" className="">
             <FontAwesomeIcon icon={faHome} className="text-white"/>
             </Link>
-            <FontAwesomeIcon icon={faBell} className="text-300 text-xl ml-2 text-white" />
-            <FontAwesomeIcon icon={faComments} className="text-300 ml-2 text-xl text-white" />
-            <Link to="" className="">
-            <p className="p-2 bg-green-300 text-white rounded-lg text-center ml-2">En</p>
-          </Link>
+            {/* <FontAwesomeIcon icon={faBell} className="text-300 text-xl ml-2 text-white" />
+            <FontAwesomeIcon icon={faComments} className="text-300 ml-2 text-xl text-white" /> */}
+            
+            <button id="en" onClick={()=>{handleClick('en')}} className="p-2 bg-green-300 text-white rounded-lg text-center ml-2">en</button>
+            <button id="en" onClick={()=>{handleClick('kh')}} className="p-2 bg-red-300 text-white rounded-lg text-center ml-2">kh</button>
+          
         </div>
         <div className="flex w-1/4 gap-3 justify-center items-center ">
         <Link to="/create-post" className="">
-            <p className="p-2 bg-green-300 text-white rounded-lg text-center hover:bg-green-500">Add Post</p>
+            <p className="p-2 bg-green-300 text-white rounded-lg text-center hover:bg-green-500">{t('Add.1')}{' '}{t('Post.1')}</p>
           </Link>
           <Link to={`user-profile/${user?._id}`} className="hidden md:block">
             <img src={user.image} alt="user-pic" className="w-11 h-11 rounded-full border-2 border-green-300 object-cover" />
@@ -52,4 +78,6 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
 
   return null;
 };
+
+
 export default Navbar

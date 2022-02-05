@@ -11,9 +11,11 @@ const breakpointColumnsObj = {
   1000: 2,
   500: 1,
 };
-
+//get the data from feed
 const MasonryLayout = ({ posts }) => (
+  //style to load
   <Masonry className="flex animate-slide-fwd" breakpointCols={breakpointColumnsObj}>
+    {/* load each time by id also pass data to post for detail page */}
     {posts?.map((post) => <Post key={post._id} post={post} className="w-max" />)}
   </Masonry>
 );

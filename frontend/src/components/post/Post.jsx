@@ -14,29 +14,33 @@ const Post = ({post}) => {
   const navigate = useNavigate();
 
   const { postedBy, image, _id, destination } = post;
-
+  //check user
   const user = localStorage.getItem('user') !== 'undefined' ? JSON.parse(localStorage.getItem('user')) : localStorage.clear();
-
+  //delete base on id
   const deletePost = (id) => {
+    if(window.confirm('Are you sure you want to delete this post?')){
     client
       .delete(id)
       .then(() => {
         window.location.reload();
       });
   };
-
+}
+  //post that liked
   let alreadySaved = post?.save?.filter((item) => item?.postedBy?._id === user?.googleId);
 
   alreadySaved = alreadySaved?.length > 0 ? alreadySaved : [];
-
+  //like function
   const savePost = (id) => {
+    //check whether the length 
     if (alreadySaved?.length === 0) {
       setSavingPost(true);
-
+      
       client
         .patch(id)
         .setIfMissing({ save: [] })
         //insert add the end of the save array
+        
         .insert('after', 'save[-1]', [{
           _key: uuidv4(),//get unique id 
           userId: user?.googleId,

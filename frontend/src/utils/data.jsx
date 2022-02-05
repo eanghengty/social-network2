@@ -3,7 +3,8 @@ export const userQuery=(id)=>{
     const query = `*[_type=='user' && _id=='${id}']`
     return query
 }
-export const feedQuery= `*[_type == "post" ]| order(_createAt desc){
+// query the feed
+export const feedQuery= `*[_type == "post" ]{
         image{
             asset->{
               url
@@ -16,6 +17,7 @@ export const feedQuery= `*[_type == "post" ]| order(_createAt desc){
                 userName,
                 image
               },
+           
               save[]{
                 _key,
                 postedBy->{
@@ -25,9 +27,9 @@ export const feedQuery= `*[_type == "post" ]| order(_createAt desc){
                 },
               },
             } `
-   
+   //query create post
             export const userCreatedpostsQuery = (userId) => {
-              const query = `*[ _type == 'post' && userId == '${userId}'] | order(_createdAt desc){
+              const query = `*[ _type == 'post' && userId == '${userId}'] {
                 image{
                   asset->{
                     url
@@ -50,9 +52,9 @@ export const feedQuery= `*[_type == "post" ]| order(_createAt desc){
               }`;
               return query;
             };
-            
+            //query when like the post, query the post
             export const userSavedpostsQuery = (userId) => {
-              const query = `*[_type == 'post' && '${userId}' in save[].userId ] | order(_createdAt desc) {
+              const query = `*[_type == 'post' && '${userId}' in save[].userId ]{
                 image{
                   asset->{
                     url
@@ -75,6 +77,8 @@ export const feedQuery= `*[_type == "post" ]| order(_createAt desc){
               }`;
               return query;
             };
+
+//query the post when searched
 export const searchQuery=(searchTerm)=>{
     const query =`*[_type == "post" && title match '${searchTerm}' || category match '${searchTerm}']{
         image{
@@ -100,30 +104,49 @@ export const searchQuery=(searchTerm)=>{
             }`;
     return query;
 }
+
+//categories for side bar and slice for categories
 export const categories = [
   {
-    name: 'Khmer',
+    name: 'Pizza',
  
   },
   {
-    name: 'Japanese',
+    name: 'Burger',
     
   },
   {
-    name: 'Korean',
+    name: 'Street-food',
+    
+  },
+  {
+    name: 'Noodle',
+    
+  },
+  {
+    name: 'Soup',
+   
+  },
+  {
+    name: 'Others'
+  },
+  {
+    name: 'Pub',
+    
+  },
+  {
+    name: 'Beach',
     
   },
   {
     name: 'Temple',
     
-  },
-  {
-    name: 'Beach',
-   
-  },
+  }
+  
   
   
 ];
+//query to get the actual detail for select post
 export const postDetailQuery = (postId) => {
   const query = `*[_type == "post" && _id == '${postId}']{
     image{
@@ -160,7 +183,7 @@ export const postDetailQuery = (postId) => {
   }`;
   return query;
 };
-
+//query relate post base on the same category type
 export const postDetailMorepostQuery = (post) => {
   const query = `*[_type == "post" && category == '${post.category}' && _id != '${post._id}' ]{
     image{

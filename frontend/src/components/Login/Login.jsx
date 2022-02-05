@@ -1,17 +1,20 @@
 import {GoogleLogin} from 'react-google-login'
 import { useNavigate } from 'react-router-dom'
-import {FcGoogle} from 'react-icons/fc'
+import {FcGoogle, FcKey} from 'react-icons/fc'
 import logo from '../../assets/whitelogo.png'
-import backgroud from '../../assets/background.mp4'
+import backgroud from '../../assets/background.jpg'
 import {client} from '../../sanity'
-
+import {Link} from 'react-router-dom'
 
 const Login=()=>{
 
   const navigate = useNavigate();
+  //request and destruct object for document
   const responseGoogle = (response) => {
     localStorage.setItem('user', JSON.stringify(response.profileObj));
-    const { googleId,name, imageUrl } = response.profileObj;
+    const { name} = response.profileObj
+    const {googleId} = response.profileObj
+    const {imageUrl} = response.profileObj
     
     const doc = {
       _id: googleId,
@@ -19,6 +22,7 @@ const Login=()=>{
       userName: name,
       image: imageUrl,
     };
+    //if there is no user then navigate to login page
     client.createIfNotExists(doc).then(() => {
       navigate('/', { replace: true });
     });
@@ -27,15 +31,12 @@ const Login=()=>{
   return (
     <div className="flex justify-start items-center flex-col h-screen">
       <div className=" relative w-full h-full">
-        <video
+        <img
           src={backgroud}
-          type="video/mp4"
-          loop
-          controls={false}
-          muted
-          autoPlay
+          
+           
           className="w-full h-full object-cover"
-        />
+        ></img>
 
         <div className="absolute flex flex-col justify-center items-center top-0 right-0 left-0 bottom-0 bg-blackOverlay">
           <div className="p-5">
@@ -44,7 +45,7 @@ const Login=()=>{
 
           <div className="shadow-2xl">
             <GoogleLogin
-              clientId='704232463180-185r906jm9s84o9p6kbvp07slok04so1.apps.googleusercontent.com'
+              clientId={`${process.env.REACT_APP_GOOGLE_API_TOKEN}`}
               render={(renderProps) => (
                 <button
                   type="button"
@@ -59,6 +60,11 @@ const Login=()=>{
               onFailure={responseGoogle}
               cookiePolicy="single_host_origin"
             />
+          </div>
+          <div className="shadow-2xl mt-3">
+          <Link to="/loginwithemail" className="bg-slate-800 flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none">
+                  <FcKey className="mr-4" /> <span className="text-xl text-white">Sign in with email</span>
+                </Link>
           </div>
           <h1 className="text-xl text-white mt-3">We get to live in the time that we get to use social media as a tool.</h1>
         </div>

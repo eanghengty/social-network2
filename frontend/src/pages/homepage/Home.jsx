@@ -1,18 +1,20 @@
-import Navbar from "../../components/Navbar/Navbar"
+
 import {userQuery} from "../../utils/data"
 import Sidebar from "../../components/sidebar/Sidebar"
 import Posts from "../../components/post/Posts"
-import RightSideBar from "../../components/rightSideBar/RightSideBar"
 import { useEffect, useState, useRef } from "react"
-import User from "../../components/user/User"
+
 import {client} from '../../sanity'
-import logo from '../../assets/logo.jpeg'
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars, faHamburger, faTimes } from "@fortawesome/free-solid-svg-icons"
 import {Link} from 'react-router-dom'
 import './Home.css'
 import {Routes, Route} from 'react-router-dom'
 import UserProfile from "../../profile/UserProfile"
+
+
+
 
 const Home =()=>{
 
@@ -27,12 +29,13 @@ const Home =()=>{
   useEffect(() => {
 
     const query = userQuery(userInfo?.googleId);
-    //if it true then it set user to the first user
+    //if it true then it set user to the first user that ? mean if no then do nothing
     client.fetch(query).then((data) => {
       setUser(data[0]);
     });
   }, []);
 
+  //everytime screen render set to 0,0
   useEffect(() => {
     scrollRef.current.scrollTo(0, 0);
   });
@@ -41,6 +44,7 @@ const Home =()=>{
     <div className="flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out">
       <div className="hidden md:flex h-screen flex-initial">
         <Sidebar users={user && user} />
+        {/*  */}
       </div>
       <div className="flex md:hidden flex-row bg-gray-200">
         <div className="p-2 w-full flex flex-row justify-between items-center shadow-md">
@@ -62,6 +66,7 @@ const Home =()=>{
         )}
       </div>
       <div className="pb-2 flex-1 h-screen overflow-y-scroll" ref={scrollRef}>
+          {/* allpost + userprofile depend on home */}
         <Routes>
           <Route path="/user-profile/:userId" element={<UserProfile />} />
           <Route path="/*" element={<Posts user={user && user} />} />
